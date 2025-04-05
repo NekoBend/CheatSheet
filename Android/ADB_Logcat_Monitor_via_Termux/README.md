@@ -68,7 +68,25 @@
 8. **logcatをファイルに出力 (フィルタ指定も可)**
 
    ```bash
-   adb logcat | tee ~/storage/downloads/termux/watch_dog.txt
+   adb logcat > ~/storage/downloads/termux/watch_dog.txt
+
+   # teeコマンドを使うと、画面にも表示される
+   # adb logcat | tee ~/storage/downloads/termux/watch_dog.txt
+   ```
+
+   途中で途切れる場合もあるので、以下のようにしておくと良い:
+
+   ```bash
+   while true; do
+
+      adb connect xxx.xxx.xxx.xxx:5555
+
+      adb logcat > ~/storage/downloads/termux/watch_dog.txt
+
+      # teeコマンドを使うと、画面にも表示される
+      # adb logcat | tee  -a ~/storage/downloads/termux/watch_dog.txt
+      sleep 1
+   done
    ```
 
 ---
@@ -80,7 +98,7 @@
    例: `tail-adb.ps1`
 
    ```powershell
-   $remoteFile = "~/storage/downloads/termux/watch_dog.txt"
+   $remoteFile = "/sdcard/Download/termux/watch_dog.txt"
    $localFile = "$PSScriptRoot\watch_log.txt"
    $lastSize = 0
 
